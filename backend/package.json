@@ -1,0 +1,20 @@
+{
+  "name": "backend",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-db-local": "npx wrangler d1 execute FEEDS_DB --local --file=./schema.sql",
+    "cf-db-remote": "npx wrangler d1 execute FEEDS_DB --remote --file=./schema.sql",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "hono": "^4.11.5",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260124.0",
+    "@types/node": "^25.0.10",
+    "wrangler": "^4.4.0"
+  }
+}

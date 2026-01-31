@@ -1,0 +1,23 @@
+meta {
+  name: write feed
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{request-url}}/feed
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Technical Grimoire",
+    "url": "https://www.technicalgrimoire.com/feed.xml"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
