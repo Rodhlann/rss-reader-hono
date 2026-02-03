@@ -53,7 +53,6 @@ const Feeds = ({ feeds }: Feeds) => {
 };
 
 app.get("/", async (c) => {
-	// NOOP COMMENT
 	let data: Feed[];
 
 	const { NODE_ENV } = env<{ NODE_ENV: string }>(c);
