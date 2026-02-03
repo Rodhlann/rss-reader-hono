@@ -12,7 +12,7 @@
 		"lint-staged": "^16.2.7"
 	},
 	"scripts": {
-		"prepare": "husky install",
+		"prepare": "node .husky/install.mjs",
 		"lint": "biome check .",
 		"lint:fix": "biome check --write ."
 	},
