@@ -3,7 +3,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"lint": "biome check .",
+		"lint": "npx @biomejs/biome check .",
 		"build": "npm run lint && vite build",
 		"preview": "wrangler pages dev",
 		"deploy": "npm run build && wrangler pages deploy",
