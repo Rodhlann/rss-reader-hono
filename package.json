@@ -1,0 +1,24 @@
+{
+	"name": "rss-reader-hono",
+	"private": true,
+	"workspaces": [
+		"frontend",
+		"backend",
+		"feed-reader"
+	],
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.13",
+		"husky": "^8.0.0",
+		"lint-staged": "^16.2.7"
+	},
+	"scripts": {
+		"prepare": "husky install",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write ."
+	},
+	"lint-staged": {
+		"**/*.{js,ts,tsx,json}": [
+			"biome check --write --no-errors-on-unmatched"
+		]
+	}
+}

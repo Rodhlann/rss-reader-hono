@@ -3,14 +3,10 @@
 	"name": "feed-reader",
 	"main": "src/index.ts",
 	"workers_dev": false,
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
+	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "2026-01-26",
 	"triggers": {
-		"crons": [
-			"0 */6 * * *"
-		]
+		"crons": ["0 */6 * * *"]
 	},
 	"d1_databases": [
 		{
@@ -23,18 +19,18 @@
 		"enabled": true,
 		"head_sampling_rate": 1,
 		"logs": {
-		  "enabled": true,
-		  "head_sampling_rate": 1,
-		  "persist": true,
-		  "invocation_logs": true
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"persist": true,
+			"invocation_logs": true
 		},
 		"traces": {
-		  "enabled": false,
-		  "persist": true,
-		  "head_sampling_rate": 1
+			"enabled": false,
+			"persist": true,
+			"head_sampling_rate": 1
 		}
-  }
-  // "compatibility_flags": [
+	}
+	// "compatibility_flags": [
 	//   "nodejs_compat"
 	// ],
 	// "vars": {

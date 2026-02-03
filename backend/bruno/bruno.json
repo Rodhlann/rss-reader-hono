@@ -1,9 +1,6 @@
 {
-  "version": "1",
-  "name": "rss-reader-hono-backend",
-  "type": "collection",
-  "ignore": [
-    "node_modules",
-    ".git"
-  ]
+	"version": "1",
+	"name": "rss-reader-hono-backend",
+	"type": "collection",
+	"ignore": ["node_modules", ".git"]
 }

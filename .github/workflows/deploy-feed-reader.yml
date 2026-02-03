@@ -1,0 +1,33 @@
+name: Deploy Feed Reader
+on:
+  push:
+    branches: [master]
+    paths: ['feed-reader/**']
+  pull_request:
+    branches: [master]
+    paths: ['feed-reader/**']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Lint Feed Reader
+        run: npx @biomejs/biome check ./feed-reader
+
+      - name: Deploy to CloudFlare 
+        if: github.event_name == 'push'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: 'feed-reader'
