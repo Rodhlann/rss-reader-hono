@@ -6,7 +6,7 @@
 		"lint": "npx @biomejs/biome check .",
 		"build": "npm run lint && vite build",
 		"preview": "wrangler pages dev",
-		"deploy": "npm run build && wrangler pages deploy",
+		"deploy": "npx wrangler pages deploy",
 		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
 	},
 	"dependencies": {
