@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { env } from "hono/adapter";
 import { renderer } from "./renderer";
 
 type Bindings = {
@@ -52,10 +53,24 @@ const Feeds = ({ feeds }: Feeds) => {
 };
 
 app.get("/", async (c) => {
-	const res = await c.env.BACKEND.fetch("http://backend.internal/feeds");
-	console.log(res);
-	const data: Feed[] = await res.json();
-	console.log(data);
+	let data: Feed[];
+
+	const { NODE_ENV } = env<{ NODE_ENV: string }>(c);
+	if (NODE_ENV === "development") {
+		const entries: Entry[] = new Array(5).fill(null).map(() => ({
+			title: "Test Entry",
+			url: "Test URL",
+		}));
+		data = new Array(5).fill(null).map((_, i) => ({
+			name: `Test Feed ${i + 1}`,
+			url: `Test URL ${i + 1}`,
+			entries,
+		}));
+	} else {
+		const res = await c.env.BACKEND.fetch("http://backend.internal/feeds");
+		data = await res.json();
+	}
+
 	return c.render(<Feeds feeds={data} />);
 });
 
