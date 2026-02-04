@@ -75,7 +75,7 @@ app.get("/", async (c) => {
 });
 
 app.get("/admin", (c) => {
-	return c.render("Login Page");
+	return c.render("Login");
 });
 
 export default app;
