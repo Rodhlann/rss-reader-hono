@@ -1,6 +1,9 @@
 import { Hono } from "hono";
 import { env } from "hono/adapter";
+import { Admin } from "./components/admin";
+import { Feeds } from "./components/feeds";
 import { renderer } from "./renderer";
+import type { Entry, Feed } from "./types";
 
 type Bindings = {
 	BACKEND: Fetcher;
@@ -10,62 +13,23 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 app.use(renderer);
 
-type Entry = {
-	title: string;
-	url: string;
-};
-
-type Feed = {
-	name: string;
-	url: string;
-	entries: Entry[];
-};
-
-const Feed = (feed: Feed) => {
-	const children = feed.entries.map((e) => (
-		<li>
-			<a href={e.url}>{e.title}</a>
-		</li>
-	));
-	const root = feed.url.substring(0, feed.url.lastIndexOf("/"));
-	return (
-		<>
-			<h1>
-				<a href={root}>{feed.name}</a>
-			</h1>
-			<ul>{children}</ul>
-		</>
-	);
-};
-
-type Feeds = {
-	feeds: Feed[];
-};
-
-const Feeds = ({ feeds }: Feeds) => {
-	return (
-		<>
-			{feeds.map((f) => (
-				<Feed {...f} />
-			))}
-		</>
-	);
-};
+const MOCK_ENTRIES: Entry[] = new Array(5).fill(null).map(() => ({
+	title: "Test Entry",
+	url: "Test URL",
+}));
+const MOCK_FEEDS: Feed[] = new Array(5).fill(null).map((_, i) => ({
+	id: i,
+	name: `Test Feed ${i + 1}`,
+	url: `Test URL ${i + 1}`,
+	entries: MOCK_ENTRIES,
+}));
 
 app.get("/", async (c) => {
 	let data: Feed[];
 
 	const { NODE_ENV } = env<{ NODE_ENV: string }>(c);
 	if (NODE_ENV === "development") {
-		const entries: Entry[] = new Array(5).fill(null).map(() => ({
-			title: "Test Entry",
-			url: "Test URL",
-		}));
-		data = new Array(5).fill(null).map((_, i) => ({
-			name: `Test Feed ${i + 1}`,
-			url: `Test URL ${i + 1}`,
-			entries,
-		}));
+		data = MOCK_FEEDS;
 	} else {
 		const res = await c.env.BACKEND.fetch("http://backend.internal/feeds");
 		data = await res.json();
@@ -75,7 +39,7 @@ app.get("/", async (c) => {
 });
 
 app.get("/admin", (c) => {
-	return c.render("Login");
+	return c.render(<Admin />);
 });
 
 export default app;
