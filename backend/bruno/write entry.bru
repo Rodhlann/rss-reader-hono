@@ -1,0 +1,23 @@
+meta {
+  name: write entry
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{request-url}}/entry/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Test Entry 1",
+    "url": "Test Entry"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
